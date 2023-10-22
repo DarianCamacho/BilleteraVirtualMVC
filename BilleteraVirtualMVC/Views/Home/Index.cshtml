@@ -1,0 +1,58 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+
+}
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link reel="stylesheet" href="~/css/Home.css"/>
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#myInput").on("keyup", function () {
+                var value = $(this).val().toLowerCase();
+                $("#myTable tr").filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+    </script>
+
+    <style>
+
+        p {
+            background: linear-gradient(to right, #f8f9fa, #dee2e6,#ced4da);
+            -webkit-background-clip: text;
+            color: transparent;
+            display: inline-block;
+        }
+
+    </style> 
+
+</head>
+
+<body style="margin-bottom: 20px;">
+    <div class="container text-center mt-5">
+
+        <div class="content-container">
+            <figure class="text-center">
+                <blockquote class="blockquote">
+                    <p class="mb-0">Billetera Virtual</p>
+                </blockquote>
+            </figure>
+        </div>
+
+    </div>
+
+    <main>
+
+
+
+    </main>
+
+    <footer>
+    </footer>
+</body>

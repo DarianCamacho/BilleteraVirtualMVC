@@ -1,0 +1,364 @@
+
+body {
+    width: 100%;
+    height: 100%;
+    font-family: sans-serif;
+    letter-spacing: 0.03em;
+    line-height: 1.6;
+    font-family: 'Open Sans', sans-serif;
+}
+
+.tittle {
+    text-align: center;
+    font-size: 40px;
+    color: #6a6a6a;
+    margin-top: 100px;
+    font-weight: 100;
+}
+
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    margin-top: 15px;
+    max-width: 800px; /* Ajusta el ancho máximo según tus necesidades */
+    width: 800%; /* Ajusta el ancho según tus necesidades */
+    margin: 0 auto; /* Esto centrará horizontalmente el contenido */
+    padding: 20px; /* Añade un relleno para espaciar el contenido del borde */
+}
+
+    .container .card {
+        width: 530px;
+        height: 430px;
+        border-radius: 8px;
+        box-shadow: 0 2px 2px rgba(0,0,0, 0.2);
+        overflow: hidden;
+        margin: 2px;
+        text-align: center;
+        transition: all 0.25s;
+    }
+
+        .container .card:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 12px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .container .card img {
+            width: 330px;
+            height: 220px;
+        }
+
+        .container .card h4 {
+            font-weight: 600;
+        }
+
+        .container .card p {
+            padding: 0 1rem;
+            font-size: 16px;
+            font-weight: 300;
+        }
+
+        .container .card a {
+            font-weight: 500;
+            text-decoration: none;
+            color: #3498db;
+        }
+
+
+.group {
+    position: relative;
+}
+
+.input {
+    font-size: 16px;
+    padding: 10px 10px 10px 5px;
+    display: block;
+    width: 400px;
+    border: none;
+    border-bottom: 1px solid #515151;
+    background: transparent;
+}
+
+    .input:focus {
+        outline: none;
+    }
+
+label {
+    color: #999;
+    font-size: 18px;
+    font-weight: normal;
+    position: absolute;
+    pointer-events: none;
+    left: 5px;
+    top: 10px;
+    transition: 0.2s ease all;
+    -moz-transition: 0.2s ease all;
+    -webkit-transition: 0.2s ease all;
+}
+
+.input:focus ~ label, .input:valid ~ label {
+    top: -20px;
+    font-size: 14px;
+    color: black;
+}
+
+.bar {
+    position: relative;
+    display: block;
+    width: 200px;
+}
+
+    .bar:before, .bar:after {
+        content: '';
+        height: 2px;
+        width: 0;
+        bottom: 1px;
+        position: absolute;
+        background: #5264AE;
+        transition: 0.2s ease all;
+        -moz-transition: 0.2s ease all;
+        -webkit-transition: 0.2s ease all;
+    }
+
+    .bar:before {
+        left: 50%;
+    }
+
+    .bar:after {
+        right: 50%;
+    }
+
+.input:focus ~ .bar:before, .input:focus ~ .bar:after {
+    width: 50%;
+}
+
+.highlight {
+    position: absolute;
+    height: 60%;
+    width: 100px;
+    top: 25%;
+    left: 0;
+    pointer-events: none;
+    opacity: 0.5;
+}
+
+.input:focus ~ .highlight {
+    animation: inputHighlighter 0.3s ease;
+}
+
+@keyframes inputHighlighter {
+    from {
+        background: #5264AE;
+    }
+
+    to {
+        width: 0;
+        background: transparent;
+    }
+}
+
+
+/*DIVS*/
+
+.content-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    margin-top: 10px;
+    max-width: 1000px; /* Ajusta el ancho máximo según tus necesidades */
+    width: 100%; /* Ajusta el ancho según tus necesidades */
+    margin: 0 auto; /* Esto centrará horizontalmente el contenido */
+    padding: 20px; /* Añade un relleno para espaciar el contenido del borde */
+}
+}
+
+    /* Estilos adicionales para el formulario si es necesario */
+    .content-box form {
+        /* Tus estilos personalizados para el formulario aquí */
+    }
+
+.centered{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.background {
+    display: inline-block; /* Hace que el div se ajuste al contenido */
+    padding: 20px; /* Espacio interno */
+    border-radius: 10px; /* Bordes redondos */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 6px 12px rgba(0, 0, 0, 0.1); /* Sombra */
+    background-color: #f5f5f5; /* Cambia el color de fondo a uno menos blanco */
+    transition: transform 0.3s; /* Transición suave */
+
+}
+
+.custom-div:hover {
+   transform: scale(1.1, 1); /* Aumenta ligeramente el tamaño en el hover */
+}
+
+
+/*Tarjeta de Credito*/
+*,
+*:before,
+*:after {
+    box-sizing: border-box;
+}
+
+body {
+  font-family: 'Montserrat', 'Helvetica', sans-serif;
+  font-size: 14px;
+  line-height: 1.3;
+}
+
+@media screen and (min-width: 400px) {
+  body {
+    overflow-x: hidden;
+  }
+}
+
+.container,
+.card-credit-container {
+  margin: 0 auto;
+  margin-top: 5em;
+  width: 400px;
+  text-align: right;
+}
+
+.card-credit {
+  width: 600px;
+  height: 350px;
+  text-align: left;
+  margin-bottom: 1em;
+}
+
+.front {
+  position: absolute;
+  width: inherit;
+  height: inherit;
+  border-radius: 15px;
+  color: #fff;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 1px 10px 1px rgba(0, 0, 0, 0.3);
+  backface-visibility: hidden;
+  background-image: linear-gradient(to right, #111, #555);
+  overflow: hidden;
+}
+
+.front {
+  transform: translateZ(0);
+}
+
+.strip-bottom,
+.strip-top {
+  position: absolute;
+  right: 0;
+  height: inherit;
+  background-image: linear-gradient(to bottom, #ff6767, #ff4545);
+  box-shadow: 0 0 10px 0px rgba(0, 0, 0, 0.5);
+}
+
+.strip-bottom {
+  width: 200px;
+  transform: skewX(-15deg) translateX(50px);
+}
+
+.strip-top {
+  width: 180px;
+  transform: skewX(20deg) translateX(50px);
+}
+
+.logo {
+  position: absolute;
+  top: 30px;
+  right: 25px;
+}
+
+.investor {
+  position: relative;
+  top: 30px;
+  left: 25px;
+  text-transform: uppercase;
+}
+
+.chip {
+  position: relative;
+  top: 60px;
+  left: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 40px;
+  border-radius: 5px;
+  background-image: linear-gradient(to bottom left, #ffecc7, #d0b978);
+  overflow: hidden;
+}
+
+.chip .chip-line {
+  position: absolute;
+  width: 100%;
+  height: 1px;
+  background-color: #333;
+}
+
+.chip .chip-line:nth-child(1) {
+  top: 13px;
+}
+
+.chip .chip-line:nth-child(2) {
+  top: 20px;
+}
+
+.chip .chip-line:nth-child(3) {
+  top: 28px;
+}
+
+.chip .chip-line:nth-child(4) {
+  left: 25px;
+  width: 1px;
+  height: 50px;
+}
+
+.chip .chip-main {
+  width: 20px;
+  height: 25px;
+  border: 1px solid #333;
+  border-radius: 3px;
+  background-image: linear-gradient(to bottom left, #efdbab, #e1cb94);
+  z-index: 1;
+}
+
+.wave {
+  position: relative;
+  top: 20px;
+  left: 100px;
+}
+
+.card-number {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 50px 25px 15px;
+  font-size: 23px;
+  font-family: 'cc font', monospace;
+}
+
+.end {
+  margin-left: 25px;
+  text-transform: uppercase;
+  font-family: 'cc font', monospace;
+}
+
+.end .end-text {
+  font-size: 9px;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.card-holder {
+  margin: 10
+}

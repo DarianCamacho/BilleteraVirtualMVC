@@ -1,0 +1,79 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<head>
+
+    <link rel="stylesheet" href="~/css/Card.css" />
+
+
+
+</head>
+
+<body>
+
+    <form asp-controller="Wallet" asp-action="Create">
+        <div class="card-item">
+            <div class="card-item__side -front">
+                <div class="card-item__focus">
+                    <div class="card-item__cover"></div>
+                </div>
+                <div class="card-item__top">
+                    <img src="placeholder-image.jpg" class="card-item__chip" alt="Chip" />
+                    <div class="card-item__type">
+                        <img src="placeholder-type-image.jpg"
+                             class="card-item__typeImg"
+                             alt="Card Type" />
+                    </div>
+                </div>
+                <div class="card-item__content">
+                    <div class="card-item__bank">Banco</div>
+                    <div class="card-item__owner">Nombre del Titular</div>
+                    <div class="card-item__number">Número de Tarjeta</div>
+                    <div class="card-item__date">Fecha de Vencimiento</div>
+                </div>
+            </div>
+            <div class="card-item__side -back">
+                <div class="card-item__cover"></div>
+                <div class="card-item__band">
+                    <div class="card-item__cvv">CVV</div>
+                </div>
+            </div>
+        </div>
+        <div class="card-input">
+            <label for="card-photo">Foto de Tarjeta</label>
+            <input type="file" id="photopath" name="photopath" class="card-input" required />
+        </div>
+        <div class="card-input">
+            <label for="bank">Banco</label>
+            <input type="text" id="bank" name="bank" class="card-input" required />
+        </div>
+        <div class="card-input">
+            <label for="issuer">Emisor</label>
+            <input type="text" id="issuer" name="issuer" class="card-input" required />
+        </div>
+        <div class="card-input">
+            <label for="owner">Nombre del Titular</label>
+            <input type="text" id="owner" name="owner" class="card-input" required />
+        </div>
+        <div class="card-input">
+            <label for="card-number">Número de Tarjeta</label>
+            <input type="text" id="id" name="id" class="card-input" maxlength="19" required />
+        </div>
+        <div class="card-input">
+            <label for="cvv">Código CVV</label>
+            <input type="text" id="cvv" name="cvv" class="card-input" maxlength="4" required />
+        </div>
+        <div class="card-input">
+            <label for="expiry">Fecha de Vencimiento (MM/YY)</label>
+            <input type="text" id="codedate" name="codedate" class="card-input" maxlength="5" required />
+        </div>
+        <button type="submit" class="btn btn-primary">Save</button>
+    </form>
+
+
+    <script src="~/js/Card.js"></script>
+
+</body>

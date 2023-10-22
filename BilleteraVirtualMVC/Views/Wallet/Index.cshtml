@@ -1,0 +1,192 @@
+﻿﻿@{
+    ViewData["Title"] = "Index";
+}
+
+<head>
+
+    <link rel="stylesheet" href="~/css/Card.css" />
+    <link rel="stylesheet" href="~/css/Home.css" />
+
+</head>
+
+<body>
+    <figure class="text-center">
+        <blockquote class="blockquote">
+            <p class="mb-0 gradient-text">Welcome to the Condominium Visitor Registration</p>
+        </blockquote>
+        <figcaption class="blockquote-footer">
+            Get started today and ensure a smooth visit for your guests!
+        </figcaption>
+    </figure>
+
+    <div class="background">
+        <div class="container-credit">
+            <div class="card-credit">
+                <div class="front" id="credit-card">
+                    <!-- Agregado el id "credit-card" -->
+                    <div class="strip-bottom"></div>
+                    <div class="strip-top"></div>
+                    <div class="logo">LOGO</div>
+                    <div class="investor">Investor</div>
+                    <div class="chip">
+                        <div class="chip-line"></div>
+                        <div class="chip-line"></div>
+                        <div class="chip-line"></div>
+                        <div class="chip-line"></div>
+                        <div class="chip-main"></div>
+                    </div>
+                    <div class="wave">Wave</div>
+                    <div class="card-number">
+                        <span class="cc-number">•••• •••• •••• ••••</span>
+                        <span class="end">12/24 <span class="end-text">Valid thru</span></span>
+                    </div>
+                    <div class="card-holder">NOMBRE DEL TITULAR</div>
+                    <div class="master">
+                        <div class="circle master-red"></div>
+                        <div class="circle master-yellow"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="content-box" style="margin-top: 3%;">
+        <div class="tab-content">
+            <div class="tab-pane fade show active" id="visits-form">
+                <ul class="nav nav-tabs card-header-tabs">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="login-tab" data-bs-toggle="tab" href="#visits-form">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-credit-card-2-front" viewBox="0 0 16 16">
+                                <path d="M14 3a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h12zM2 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H2z" />
+                                <path d="M2 5.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-1zm0 3a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5z" />
+                            </svg>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <form asp-controller="Wallet" asp-action="Create">
+
+                <br />
+                <div class="group">
+                    <input type="text" class="input" id="bank" name="bank" required>
+                    <span class="highlight"></span>
+                    <span class="bar"></span>
+                    <label>Banco</label>
+                </div>
+                <br />
+                <br />
+                <div class="group">
+                    <input type="text" class="input" id="id" name="id" required maxlength="16">
+                    <span class="highlight"></span>
+                    <span class="bar"></span>
+                    <label>Card Number</label>
+                </div>
+                <br />
+                <br />
+                <div class="group">
+                    <input type="text" class="input" id="issuer" name="issuer" required>
+                    <span class="highlight"></span>
+                    <span class="bar"></span>
+                    <label>Issuer</label>
+                </div>
+                <br />
+                <br />
+                <div class="group">
+                    <input type="text" class="input" id="owner" name="owner" required>
+                    <span class="highlight"></span>
+                    <span class="bar"></span>
+                    <label>Card Houlders</label>
+                </div>
+                <br />
+                <br />
+                <div class="group">
+                    <input type="text" class="input" id="cvv" name="cvv" maxlength="4" required>
+                    <span class="highlight"></span>
+                    <span class="bar"></span>
+                    <label>CVV</label>
+                </div>
+                <br />
+                <br />
+                <div class="group">
+                    <input type="date" class="input" id="codedate" name="codedate" maxlength="6" required>
+                    <span class="highlight"></span>
+                    <span class="bar"></span>
+                </div>
+                <br />
+                <br />
+
+                <button type="submit" class="btn btn-primary" style="width: 400px; align-content:center; align-items: center;">Save</button>
+            </form>
+        </div>
+    </div>
+
+
+    <script>
+        // Obtén referencias a los elementos del formulario
+        const bankInput = document.getElementById("bank");
+        const idInput = document.getElementById("id");
+        const issuerInput = document.getElementById("issuer");
+        const ownerInput = document.getElementById("owner");
+        const cvvInput = document.getElementById("cvv");
+        const codedateInput = document.getElementById("codedate");
+        const creditCardDiv = document.getElementById("credit-card");
+
+        // Función para formatear el número de tarjeta en grupos de 4 dígitos
+        function formatCardNumber(cardNumber) {
+            cardNumber = cardNumber.replace(/\s/g, ''); // Elimina espacios en blanco
+            const groups = [];
+            for (let i = 0; i < cardNumber.length; i += 4) {
+                groups.push(cardNumber.slice(i, i + 4));
+            }
+            return groups.join(' ');
+        }
+
+        // Función para actualizar el contenido del div credit-card
+        function updateCreditCard() {
+            const bank = bankInput.value || 'BANCO';
+            const cardNumber = formatCardNumber(idInput.value) || '•••• •••• •••• ••••';
+            const issuer = issuerInput.value || 'EMISOR';
+            const owner = ownerInput.value || 'NOMBRE DEL TITULAR';
+            const cvv = cvvInput.value || '•••';
+            const codedate = codedateInput.value || 'MM/YY';
+
+            creditCardDiv.innerHTML = `
+                    <div class="strip-bottom"></div>
+                    <div class="strip-top"></div>
+                    <div class="logo">${bank}</div>
+                    <div class="investor">${issuer}</div>
+                    <div class="chip">
+                        <div class="chip-line"></div>
+                        <div class="chip-line"></div>
+                        <div class="chip-line"></div>
+                        <div class="chip-line"></div>
+                        <div class="chip-main"></div>
+                    </div>
+                    <div class="wave">Wave</div>
+                    <div class="card-number">
+                        <span class="cc-number">${cardNumber}</span>
+                        <span class="end">${codedate} <span class="end-text">Valid thru</span></span>
+                    </div>
+                    <div class="card-holder">${owner}</div>
+                    <div class="master">
+                        <div class="circle master-red"></div>
+                        <div class="circle master-yellow"></div>
+                    </div>
+                `;
+        }
+
+        // Agrega un evento para escuchar los cambios en los campos del formulario
+        [bankInput, idInput, issuerInput, ownerInput, cvvInput, codedateInput].forEach(inputField => {
+            inputField.addEventListener("input", updateCreditCard);
+        });
+
+        // Llama a la función inicialmente para que se muestre el contenido predeterminado
+        updateCreditCard();
+    </script>
+
+
+
+</body>
