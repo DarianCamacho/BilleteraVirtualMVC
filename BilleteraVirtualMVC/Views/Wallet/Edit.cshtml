@@ -1,0 +1,54 @@
+﻿@model BilleteraVirtualMVC.Models.Card
+
+@{
+    ViewData["Title"] = "Card Details";
+}
+}
+
+<head>
+
+    <link rel="stylesheet" href="~/css/Card.css" />
+    <link rel="stylesheet" href="~/css/Wallet.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+</head>
+
+
+<body>
+<div class="text-center">
+    <h1>Card Details</h1>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <dl class="dl-horizontal">
+                <dt>Card ID:</dt>
+                <dd>@Model.Id</dd>
+
+                <dt>Name:</dt>
+                <dd>@Model.Name</dd>
+
+                <dt>Bank:</dt>
+                <dd>@Model.Bank</dd>
+
+                <dt>Issuer:</dt>
+                <dd>@Model.Issuer</dd>
+
+                <dt>CVV:</dt>
+                <dd>@Model.CVV</dd>
+
+                <dt>Code Date:</dt>
+                <dd>@Model.CodeDate</dd>
+            </dl>
+        </div>
+    </div>
+</div>
+
+<div class="text-center">
+    <a asp-controller="Wallet" asp-action="List" class="btn btn-primary">Back to Card List</a>
+</div>
+
+</body>
+

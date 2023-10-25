@@ -3,6 +3,51 @@
     ViewData["Title"] = "Error";
 }
 
+<style>
+    * {
+  transition: all 0.6s;
+}
+
+html {
+  height: 100%;
+}
+
+body {
+  font-family: "Lato", sans-serif;
+  color: #888;
+  margin: 0;
+}
+
+#main {
+  display: table;
+  width: 100%;
+  height: 100vh;
+  text-align: center;
+}
+
+.fof {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.fof h1 {
+  font-size: 50px;
+  display: inline-block;
+  padding-right: 12px;
+  animation: type 0.5s alternate infinite;
+}
+
+keyframes type {
+  from {
+    box-shadow: inset -3px 0px 0px #888;
+  }
+  to {
+    box-shadow: inset -3px 0px 0px transparent;
+  }
+}
+
+</style>
+
 <h1 class="text-danger">Error.</h1>
 <h2 class="text-danger">An error occurred while processing your request.</h2>
 
@@ -13,13 +58,8 @@
     </p>
 }
 
-<h3>Development Mode</h3>
-<p>
-    Swapping to <strong>Development</strong> environment will display more detailed information about the error that occurred.
-</p>
-<p>
-    <strong>The Development environment shouldn't be enabled for deployed applications.</strong>
-    It can result in displaying sensitive information from exceptions to end users.
-    For local debugging, enable the <strong>Development</strong> environment by setting the <strong>ASPNETCORE_ENVIRONMENT</strong> environment variable to <strong>Development</strong>
-    and restarting the app.
-</p>
+<div id="main">
+    <div class="fof">
+        <h1>Error 404</h1>
+    </div>
+</div>

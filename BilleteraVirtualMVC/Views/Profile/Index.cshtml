@@ -38,7 +38,7 @@
 										</div>
 										<div class="flex-grow-1 ms-3">
 											<h5 class="mb-1">@ViewBag.User.Name</h5>
-											<p class="mb-2 pb-1" style="color: #2b2a2a;">Senior Journalist</p>
+											<p class="mb-2 pb-1" style="color: #2b2a2a;">Junior Developer</p>
 											<div class="d-flex justify-content-start rounded-3 p-2 mb-2"
 												 style="background-color: #efefef;">
 												<div>
@@ -56,13 +56,14 @@
 											</div>
 											<div class="d-flex pt-1">
 												<form asp-controller="Profile" asp-action="uploadPhoto" method="post" enctype="multipart/form-data">
-													<div class="row">
+													<div class="centered">
 														<div class="col">
 															<span class="btn btn-primary btn-file">
 																Browse <input type="file" name="photo">
 															</span>
 														</div>
-														<div class="col">
+														<br />
+														<div class="centered">
 															<button type="submit" class="btn btn-primary flex-grow-1">Upload</button>
 														</div>
 													</div>

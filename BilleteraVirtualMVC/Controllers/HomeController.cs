@@ -26,16 +26,7 @@ namespace BilleteraVirtualMVC.Controllers
             return View();
         }
 
-        public IActionResult GetUserName()
-        {
-            // Leemos de la sesión los datos del usuario
-            Models.User? user = JsonConvert.DeserializeObject<Models.User>(HttpContext.Session.GetString("userSession"));
-
-            // Pasamos el nombre de usuario a la vista
-            ViewBag.UserName = user?.Name;
-
-            return View("Index");
-        }
+        
 
         public IActionResult Privacy()
         {

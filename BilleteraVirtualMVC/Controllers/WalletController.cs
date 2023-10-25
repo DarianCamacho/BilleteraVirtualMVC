@@ -3,12 +3,18 @@ using Microsoft.AspNetCore.Mvc;
 using BilleteraVirtualMVC.Models;
 using Firebase.Storage;
 using Newtonsoft.Json;
+using Firebase.Auth;
 
 namespace BilleteraVirtualMVC.Controllers
 {
     public class WalletController : Controller
     {
-        public async Task<IActionResult> Index()
+        public ActionResult Index()
+        {
+            return View();
+        }
+
+        public async Task<IActionResult> List()
         {
             ViewBag.User = JsonConvert.DeserializeObject<Models.User>(HttpContext.Session.GetString("userSession"));
 
@@ -17,12 +23,16 @@ namespace BilleteraVirtualMVC.Controllers
 
             //Muestra el get en la visa
             return await GetCards();
+
+        }
+
+        public ActionResult Edit()
+        {
+            return View();
         }
 
         public IActionResult GetUserName()
         {
-
-
 
             // Leemos de la sesión los datos del usuario
             Models.User? user = JsonConvert.DeserializeObject<Models.User>(HttpContext.Session.GetString("userSession"));
@@ -33,49 +43,57 @@ namespace BilleteraVirtualMVC.Controllers
             return View();
         }
 
-        public async Task<IActionResult> List()
-        {
-            ViewBag.User = JsonConvert.DeserializeObject<Models.User>(HttpContext.Session.GetString("userSession"));
-
-            if (string.IsNullOrEmpty(HttpContext.Session.GetString("userSession")))
-                return RedirectToAction("List", "Error");
-
-            //Muestra el get en la visa
-            return await GetCards();
-        }
-
         private async Task<IActionResult> GetCards()
         {
-            List<Card> visitsList = new List<Card>();
-            Query query = FirestoreDb.Create("wallet-6d70b").Collection("Visits");
-            QuerySnapshot querySnapshot = await query.GetSnapshotAsync();
+            List<Card> cardsList = new List<Card>();
+            Query query = FirestoreDb.Create("wallet-6d70b").Collection("Cards");
+            QuerySnapshot querySnaphot = await query.GetSnapshotAsync();
 
-            foreach (var item in querySnapshot)
+            foreach (var item in querySnaphot)
             {
                 Dictionary<string, object> data = item.ToDictionary();
 
-                visitsList.Add(new Card
+                cardsList.Add(new Card
                 {
                     Id = data["Id"].ToString(),
                     Name = data["Name"].ToString(),
                     Bank = data["Bank"].ToString(),
-                    Issuer = data["Issuer"].ToString(),
-                    Owner = data["Owner"].ToString(),
-                    CodeDate = data["CodeDate"].ToString(),   
                     CVV = data["CVV"].ToString(),
-                    PhotoPath = data["PhotoPath"].ToString()
+                    Issuer = data["Issuer"].ToString(),
+                    CodeDate = data["CodeDate"].ToString()
                 });
             }
 
-            ViewBag.Visits = visitsList;
+            ViewBag.Cards = cardsList;
 
             return View();
         }
 
+        public async Task<IActionResult> DeleteCard(string id)
+        {
+            // Verifica si el usuario está autenticado (puedes agregar más validaciones si es necesario).
+            if (string.IsNullOrEmpty(HttpContext.Session.GetString("userSession")))
+            {
+                return RedirectToAction("Index", "Error");
+            }
+
+            // Crear una referencia al documento que deseas eliminar
+            DocumentReference cardRef = FirestoreDb.Create("wallet-6d70b")
+                .Collection("Cards")
+                .Document(id);
+
+            // Elimina el documento
+            await cardRef.DeleteAsync();
+
+            // Redirecciona a la vista de tarjetas actualizada
+            return RedirectToAction("List");
+        }
+
+
         // POST
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(int id, string name, string bank, string issuer, string owner, string codedate, string cvv, string photopath)
+        public async Task<IActionResult> Create(string id, string name, string bank, string issuer, string owner, string codedate, string cvv)
         {
             try
             {
@@ -87,12 +105,11 @@ namespace BilleteraVirtualMVC.Controllers
                                 { "Name", name },
                                 { "Bank", bank },
                                 { "Issuer",  issuer },
-                                { "Owner", owner },
                                 { "CodeDate", codedate },
                                 { "CVV", cvv },
                             });
 
-                return await GetCards();
+                return View("Index");
             }
 
             catch (FirebaseStorageException ex)
@@ -107,11 +124,6 @@ namespace BilleteraVirtualMVC.Controllers
 
                 return View("ErrorHandler");
             }
-        }
-
-        public ActionResult Wallet()
-        {
-            return View();
         }
     }
 }

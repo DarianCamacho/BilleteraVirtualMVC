@@ -4,47 +4,67 @@
 }
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link reel="stylesheet" href="~/css/Home.css"/>
-    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-    <script>
-        $(document).ready(function () {
-            $("#myInput").on("keyup", function () {
-                var value = $(this).val().toLowerCase();
-                $("#myTable tr").filter(function () {
-                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-                });
-            });
-        });
-    </script>
+    <link rel="stylesheet" href="~/css/Card.css" />
+    <link rel="stylesheet" href="~/css/Home.css" />
 
     <style>
 
         p {
-            background: linear-gradient(to right, #f8f9fa, #dee2e6,#ced4da);
+            background: linear-gradient(to right, black, grey);
             -webkit-background-clip: text;
             color: transparent;
             display: inline-block;
         }
 
-    </style> 
+    </style>
 
 </head>
 
 <body style="margin-bottom: 20px;">
-    <div class="container text-center mt-5">
 
-        <div class="content-container">
-            <figure class="text-center">
+    <div class="centered-container" style="margin-bottom: 20px;">
+        <div class="content-box">
+            <figure>
                 <blockquote class="blockquote">
-                    <p class="mb-0">Billetera Virtual</p>
+                    <p class="mb-0" style="margin-right: 200px">Administra tu cuenta fácilmente.</p>
+
                 </blockquote>
+                <figcaption style="margin-right: 20px" class="blockquote-footer">
+                    Tu información, pagos y privacidad, todo en un solo lugar. <cite title="Source Title"></cite>
+                </figcaption>
+                <a asp-controller="Wallet" asp-action="List">
+                <button type="button" class="btn btn-primary btn-sm" >Ir a tu cuenta</button>
+                </a>
             </figure>
         </div>
+    </div>
+    <div class="centered-container">
+        <div class="content-box">
+            <div class="card">
+                <div class="card-header">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+                <div class="card-body">
+                    <table class="table">
+                        <thead>
 
+                        </thead>
+                        <tbody id="myTable">
+                            <h2>Manage Pay Info</h2>
+                            <p>Confía en nuestra plataforma para guardar tus <a href="#">tarjetas de crédito</a> de forma segura y conveniente. Somos la solución perfecta para gestionar tus métodos de pago de manera eficiente. ¡Descubre una nueva forma de llevar tus finanzas contigo!</p>
+                            <p><small>Nuestra misión es proporcionar seguridad y comodidad en tus transacciones financieras.</small></p>
+                            <p>Garantizamos la protección de tus datos con nuestra <strong>tecnología de vanguardia</strong>.</p>
+                            <p>Experimenta la facilidad de uso con nuestra interfaz <em>intuitiva</em>.</p>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
     </div>
 
     <main>

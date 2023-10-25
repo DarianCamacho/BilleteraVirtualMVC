@@ -11,54 +11,6 @@ figcaption.blockquote-footer {
         padding-bottom: 10px; /* Añade espacio entre el texto y la línea */
     }
 
-.display-1 {
-    font-family: 'Poppins', sans-serif;
-    font-size: 15px;
-    background-image: linear-gradient(to right, #47cfd6 0%, #739bda 46%, #9078dd 100%);
-    -webkit-background-clip: text;
-    color: transparent;
-}
-
-.toast {
-    position: fixed;
-    top: 79%; /* Ajusta la posición verticalmente según tus necesidades */
-    right: 2px; /* Ajusta la posición horizontalmente según tus necesidades */
-    transform: translateY(-50%);
-    transition: transform 0.3s linear, opacity 0.3s ease-out;
-    opacity: 1;
-}
-
-    .toast.hidden {
-        /*transform: translateX(100%);  Oculta el modal hacia la derecha */
-        opacity: 0;
-        transition: transform 0.1s linear, opacity 0.1s ease-out;
-    }
-
-
-.navbar {
-    background-color: #fff;
-    border-radius: 20px; /* Bordes redondeados */
-}
-
-.navbar-brand {
-    color: #fff; /* Cambia el color del texto del título */
-}
-
-.navbar-toggler-icon {
-    background-color: #333; /* Cambia el color del ícono del botón de navegación */
-}
-
-.navbar-nav .nav-link {
-    color: #333; /* Cambia el color del texto de los enlaces de navegación */
-}
-
-    .navbar-nav .nav-link:hover {
-        color: #555; /* Cambia el color del texto de los enlaces de navegación al pasar el mouse */
-    }
-
-.navbar-collapse {
-    justify-content: flex-end; /* Alinea los elementos a la derecha */
-}
 
 
 /* Agrega este estilo para mantener la tabla blanca en todo momento */

@@ -172,7 +172,7 @@ label {
     margin: 0 auto; /* Esto centrará horizontalmente el contenido */
     padding: 20px; /* Añade un relleno para espaciar el contenido del borde */
 }
-}
+
 
     /* Estilos adicionales para el formulario si es necesario */
     .content-box form {
@@ -239,7 +239,7 @@ body {
   position: absolute;
   width: inherit;
   height: inherit;
-  border-radius: 15px;
+  border-radius: 10px;
   color: #fff;
   text-shadow: 0 1px 1px rgba(0, 0, 0, 0.3);
   box-shadow: 0 1px 10px 1px rgba(0, 0, 0, 0.3);
@@ -257,7 +257,7 @@ body {
   position: absolute;
   right: 0;
   height: inherit;
-  background-image: linear-gradient(to bottom, #ff6767, #ff4545);
+  background-image: linear-gradient(to bottom, #3498db, #ff4545);
   box-shadow: 0 0 10px 0px rgba(0, 0, 0, 0.5);
 }
 
@@ -360,5 +360,9 @@ body {
 }
 
 .card-holder {
-  margin: 10
+  margin: 10px;
+}
+
+.linea {
+    width: 900px;
 }

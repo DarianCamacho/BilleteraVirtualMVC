@@ -8,17 +8,17 @@ namespace BilleteraVirtualMVC.Controllers
 	public class ProfileController : Controller
 	{
 		public IActionResult Index()
-		{
-			if (string.IsNullOrEmpty(HttpContext.Session.GetString("userSession")))
-				return RedirectToAction("Index", "Error");
+        {
+            if (string.IsNullOrEmpty(HttpContext.Session.GetString("userSession")))
+                return RedirectToAction("Index", "Error");
 
-			//Leemos de la sesion los datos del usuario y se lo pasamos a la vista
-			ViewBag.User = JsonConvert.DeserializeObject<Models.User>(HttpContext.Session.GetString("userSession"));
+            //Leemos de la sesion los datos del usuario y se lo pasamos a la vista
+            ViewBag.User = JsonConvert.DeserializeObject<Models.User>(HttpContext.Session.GetString("userSession"));
 
-			return View();
-		}
+            return View();
+        }
 
-		public IActionResult Details(int id)
+        public IActionResult Details(int id)
 		{
 			return View();
 		}

@@ -12,16 +12,14 @@
 <body>
     <figure class="text-center">
         <blockquote class="blockquote">
-            <p class="mb-0 gradient-text">Welcome to the Condominium Visitor Registration</p>
+            <p class="mb-0 gradient-text">Ingresa los datos</p>
         </blockquote>
         <figcaption class="blockquote-footer">
-            Get started today and ensure a smooth visit for your guests!
+            AVC
         </figcaption>
     </figure>
-
-    <div class="background">
         <div class="container-credit">
-            <div class="card-credit">
+            <div class="card-credit " style="margin-left: 150px;">
                 <div class="front" id="credit-card">
                     <!-- Agregado el id "credit-card" -->
                     <div class="strip-bottom"></div>
@@ -48,14 +46,15 @@
                 </div>
             </div>
         </div>
-    </div>
 
+        <div class="linea">
 
+        </div>
 
     <div class="content-box" style="margin-top: 3%;">
         <div class="tab-content">
             <div class="tab-pane fade show active" id="visits-form">
-                <ul class="nav nav-tabs card-header-tabs">
+                <ul class="nav nav-tabs card-header-tabs" style="margin-bottom: 20px;">
                     <li class="nav-item">
                         <a class="nav-link active" id="login-tab" data-bs-toggle="tab" href="#visits-form">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-credit-card-2-front" viewBox="0 0 16 16">
@@ -71,10 +70,24 @@
 
                 <br />
                 <div class="group">
-                    <input type="text" class="input" id="bank" name="bank" required>
-                    <span class="highlight"></span>
-                    <span class="bar"></span>
-                    <label>Banco</label>
+                    <select class="input" id="bank" name="bank" required>
+                        <option value="BNCR">Banco Nacional de Costa Rica</option>
+                        <option value="BAC Credomatic">BAC Costa Rica</option>
+                        <option value="BCR">Banco de Costa Rica</option>
+                        <option value="BPDC">Banco Popular y de Desarrollo Comunal</option>
+                        <option value="Promérica">Banco Promérica</option>
+                        <option value="Lafise">Banco Lafise</option>
+                        <option value="Scotiabank ">Scotiabank Costa Rica</option>
+                        <option value="Cathay">Banco Cathay</option>
+                        <option value="Davivienda">Davivienda Costa Rica</option>
+                        <option value="BGCR">Banco General Costa Rica</option>
+                        <option value="Citibank">Citibank Costa Rica</option>
+                        <option value="BCT">Banco BCT</option>
+                        <option value="BCAC">Banco Crédito Agrícola de Cartago</option>
+                        <option value="Azteca">Banco Azteca Costa Rica</option>
+                        <option value="BICSA">Banco Internacional de Costa Rica </option>
+
+                    </select>
                 </div>
                 <br />
                 <br />
@@ -87,15 +100,17 @@
                 <br />
                 <br />
                 <div class="group">
-                    <input type="text" class="input" id="issuer" name="issuer" required>
-                    <span class="highlight"></span>
-                    <span class="bar"></span>
-                    <label>Issuer</label>
+                    <select class="input" id="issuer" name="issuer" required>
+                        <option value="null">Elegir</option>
+                        <option value="Crédito">Crédito</option>
+                        <option value="Débito">Débito</option>
+                    </select>
+
                 </div>
                 <br />
                 <br />
                 <div class="group">
-                    <input type="text" class="input" id="owner" name="owner" required>
+                    <input type="text" class="input" id="name" name="name" required>
                     <span class="highlight"></span>
                     <span class="bar"></span>
                     <label>Card Houlders</label>
@@ -123,70 +138,57 @@
         </div>
     </div>
 
-
     <script>
-        // Obtén referencias a los elementos del formulario
-        const bankInput = document.getElementById("bank");
-        const idInput = document.getElementById("id");
-        const issuerInput = document.getElementById("issuer");
-        const ownerInput = document.getElementById("owner");
-        const cvvInput = document.getElementById("cvv");
-        const codedateInput = document.getElementById("codedate");
-        const creditCardDiv = document.getElementById("credit-card");
-
-        // Función para formatear el número de tarjeta en grupos de 4 dígitos
-        function formatCardNumber(cardNumber) {
-            cardNumber = cardNumber.replace(/\s/g, ''); // Elimina espacios en blanco
-            const groups = [];
-            for (let i = 0; i < cardNumber.length; i += 4) {
-                groups.push(cardNumber.slice(i, i + 4));
-            }
-            return groups.join(' ');
+        function updateCreditCardField(className, value) {
+            const fields = document.querySelectorAll(`.${className}`);
+            fields.forEach((field) => {
+                field.textContent = value;
+            });
         }
 
-        // Función para actualizar el contenido del div credit-card
-        function updateCreditCard() {
-            const bank = bankInput.value || 'BANCO';
-            const cardNumber = formatCardNumber(idInput.value) || '•••• •••• •••• ••••';
-            const issuer = issuerInput.value || 'EMISOR';
-            const owner = ownerInput.value || 'NOMBRE DEL TITULAR';
-            const cvv = cvvInput.value || '•••';
-            const codedate = codedateInput.value || 'MM/YY';
-
-            creditCardDiv.innerHTML = `
-                    <div class="strip-bottom"></div>
-                    <div class="strip-top"></div>
-                    <div class="logo">${bank}</div>
-                    <div class="investor">${issuer}</div>
-                    <div class="chip">
-                        <div class="chip-line"></div>
-                        <div class="chip-line"></div>
-                        <div class="chip-line"></div>
-                        <div class="chip-line"></div>
-                        <div class="chip-main"></div>
-                    </div>
-                    <div class="wave">Wave</div>
-                    <div class="card-number">
-                        <span class="cc-number">${cardNumber}</span>
-                        <span class="end">${codedate} <span class="end-text">Valid thru</span></span>
-                    </div>
-                    <div class="card-holder">${owner}</div>
-                    <div class="master">
-                        <div class="circle master-red"></div>
-                        <div class="circle master-yellow"></div>
-                    </div>
-                `;
-        }
-
-        // Agrega un evento para escuchar los cambios en los campos del formulario
-        [bankInput, idInput, issuerInput, ownerInput, cvvInput, codedateInput].forEach(inputField => {
-            inputField.addEventListener("input", updateCreditCard);
+        document.getElementById("bank").addEventListener("input", function (e) {
+            updateCreditCardField("logo", e.target.value);
         });
 
-        // Llama a la función inicialmente para que se muestre el contenido predeterminado
-        updateCreditCard();
+        document.getElementById("id").addEventListener("input", function (e) {
+            updateCreditCardField("cc-number", e.target.value);
+        });
+
+        document.getElementById("issuer").addEventListener("input", function (e) {
+            updateCreditCardField("investor", e.target.value);
+        });
+
+        document.getElementById("name").addEventListener("input", function (e) {
+            updateCreditCardField("card-holder", e.target.value);
+        });
+
+        document.getElementById("cvv").addEventListener("input", function (e) {
+            updateCreditCardField("cc-cvv", e.target.value);
+        });
+
+        document.getElementById("codedate").addEventListener("input", function (e) {
+            updateCreditCardField("end", e.target.value);
+        });
+
+        function formatCardNumber(cardNumber) {
+            // Elimina espacios en blanco y caracteres no numéricos
+            cardNumber = cardNumber.replace(/\D/g, '');
+
+            // Agrega un espacio cada 4 dígitos
+            cardNumber = cardNumber.replace(/(\d{4})/g, '$1 ');
+
+            // Elimina espacios adicionales al final
+            cardNumber = cardNumber.trim();
+
+            return cardNumber;
+        }
+
+        document.getElementById("id").addEventListener("input", function (e) {
+            const formattedCardNumber = formatCardNumber(e.target.value);
+            updateCreditCardField("cc-number", formattedCardNumber);
+        });
+
+
     </script>
-
-
 
 </body>
