@@ -92,7 +92,7 @@
                 <br />
                 <br />
                 <div class="group">
-                    <input type="text" class="input" id="id" name="id" required maxlength="16">
+                    <input type="text" class="input" id="cardId" name="cardId" required maxlength="16">
                     <span class="highlight"></span>
                     <span class="bar"></span>
                     <label>Card Number</label>
@@ -102,10 +102,19 @@
                 <div class="group">
                     <select class="input" id="issuer" name="issuer" required>
                         <option value="null">Elegir</option>
+                        <option value="Visa">Visa</option>
+                        <option value="Mastercard">Mastercard</option>
+                    </select>
+
+                </div>
+                <br />
+                <br />
+                <div class="group">
+                    <select class="input" id="type" name="type" required>
+                        <option value="null">Elegir</option>
                         <option value="Crédito">Crédito</option>
                         <option value="Débito">Débito</option>
                     </select>
-
                 </div>
                 <br />
                 <br />
@@ -150,7 +159,7 @@
             updateCreditCardField("logo", e.target.value);
         });
 
-        document.getElementById("id").addEventListener("input", function (e) {
+        document.getElementById("cardId").addEventListener("input", function (e) {
             updateCreditCardField("cc-number", e.target.value);
         });
 
@@ -160,6 +169,10 @@
 
         document.getElementById("name").addEventListener("input", function (e) {
             updateCreditCardField("card-holder", e.target.value);
+        });
+
+        document.getElementById("type").addEventListener("input", function (e) {
+            updateCreditCardField("wave", e.target.value);
         });
 
         document.getElementById("cvv").addEventListener("input", function (e) {
@@ -183,7 +196,7 @@
             return cardNumber;
         }
 
-        document.getElementById("id").addEventListener("input", function (e) {
+        document.getElementById("cardId").addEventListener("input", function (e) {
             const formattedCardNumber = formatCardNumber(e.target.value);
             updateCreditCardField("cc-number", formattedCardNumber);
         });

@@ -18,18 +18,12 @@
 <body>
     <div class="container-credit">
         <div class="card-credit" style="margin-left: 150px;">
-            <div class="front" id="credit-card">
+            <div class="front" id="@Model.CardId">
                 <!-- Agregado el id "credit-card" -->
                 <div class="strip-bottom"></div>
                 <div class="strip-top"></div>
-                <div class="logo">
-                    <!-- Agregar un campo de entrada para el logotipo (Bank) -->
-                    <input asp-for="Bank" class="form-control" />
-                </div>
-                <div class="investor">
-                    <!-- Agregar un campo de entrada para el inversor (Issuer) -->
-                    <input asp-for="Issuer" class="form-control" />
-                </div>
+                <div class="logo">@Model.Bank</div>
+                <div class="investor">@Model.Issuer</div>
                 <div class="chip">
                     <div class="chip-line"></div>
                     <div class="chip-line"></div>
@@ -37,22 +31,12 @@
                     <div class="chip-line"></div>
                     <div class="chip-main"></div>
                 </div>
-                <div class="wave">
-                    <!-- Agregar un campo de entrada para el tipo (Type) -->
-                    <input asp-for="Type" class="form-control" />
-                </div>
+                <div class="wave">Visa</div>
                 <div class="card-number">
-                    <span class="cc-number">•••• •••• •••• ••••</span>
-                    <span class="end">
-                        <!-- Agregar campos de entrada para la fecha (CodeDate) y el CVV -->
-                        <input asp-for="CodeDate" class="form-control" />
-                        <span class="end-text">Valid thru</span>
-                    </span>
+                    <span class="cc-number">**** **** **** @Model.CardId.Substring(Model.CardId.Length - 4)</span>
+                    <span class="end">@Model.CodeDate <span class="end-text">Valid thru</span></span>
                 </div>
-                <div class="card-holder">
-                    <!-- Agregar un campo de entrada para el nombre del titular (Name) -->
-                    <input asp-for="Name" class="form-control" />
-                </div>
+                <div class="card-holder">@Model.Name</div>
                 <div class="master">
                     <div class="circle master-red"></div>
                     <div class="circle master-yellow"></div>
@@ -60,7 +44,6 @@
             </div>
         </div>
     </div>
-
         
     <div class="text-center">
         <a asp-controller="Wallet" asp-action="List" class="btn btn-primary">Back to Card List</a>

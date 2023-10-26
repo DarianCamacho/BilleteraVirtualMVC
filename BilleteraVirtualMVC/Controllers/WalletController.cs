@@ -4,6 +4,7 @@ using BilleteraVirtualMVC.Models;
 using Firebase.Storage;
 using Newtonsoft.Json;
 using Firebase.Auth;
+using Firebase.Auth.Repository;
 
 namespace BilleteraVirtualMVC.Controllers
 {
@@ -26,7 +27,7 @@ namespace BilleteraVirtualMVC.Controllers
 
         }
 
-        public ActionResult Edit()
+        public ActionResult CardDetail()
         {
             return View();
         }
@@ -55,12 +56,14 @@ namespace BilleteraVirtualMVC.Controllers
 
                 cardsList.Add(new Card
                 {
-                    Id = data["Id"].ToString(),
+                    Id = item.Id,
+                    CardId = data["CardId"].ToString(),
                     Name = data["Name"].ToString(),
                     Bank = data["Bank"].ToString(),
                     CVV = data["CVV"].ToString(),
                     Issuer = data["Issuer"].ToString(),
-                    CodeDate = data["CodeDate"].ToString()
+                    CodeDate = data["CodeDate"].ToString(),
+                    Type = data["Type"].ToString()
                 });
             }
 
@@ -69,31 +72,71 @@ namespace BilleteraVirtualMVC.Controllers
             return View();
         }
 
-        public async Task<IActionResult> DeleteCard(string id)
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Delete(string CardId)
         {
-            // Verifica si el usuario está autenticado (puedes agregar más validaciones si es necesario).
-            if (string.IsNullOrEmpty(HttpContext.Session.GetString("userSession")))
+            try
             {
-                return RedirectToAction("Index", "Error");
+                // Primero, obtén la referencia al documento de la tarjeta que deseas eliminar en Firebase
+                var cardDocRef = FirestoreDb.Create("wallet-6d70b")
+                    .Collection("Cards")
+                    .Document(CardId);
+
+                // Borra el documento de la tarjeta
+                await cardDocRef.DeleteAsync();
+
+                // Redirige a la vista principal (Index) después de eliminar la tarjeta
+                return RedirectToAction("List", "Wallet");
             }
+            catch (Exception ex)
+            {
+                // Manejar errores
+                Console.WriteLine("Error al eliminar tarjeta: " + ex.Message);
+                return View();
+            }
+        }
 
-            // Crear una referencia al documento que deseas eliminar
-            DocumentReference cardRef = FirestoreDb.Create("wallet-6d70b")
-                .Collection("Cards")
-                .Document(id);
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(string cardId, string name, string bank, string issuer, string codedate, string cvv, string type)
+        {
+            try
+            {
+                // Primero, obtén la referencia al documento de la tarjeta que deseas editar en Firebase
+                var cardDocRef = FirestoreDb.Create("wallet-6d70b")
+                    .Collection("Cards")
+                    .Document(cardId);
 
-            // Elimina el documento
-            await cardRef.DeleteAsync();
+                // Crear un objeto anónimo con los campos a actualizar
+                var updateData = new
+                {
+                    Name = name,
+                    Bank = bank,
+                    Issuer = issuer,
+                    CodeDate = codedate,
+                    CVV = cvv,
+                    Type = type
+                };
 
-            // Redirecciona a la vista de tarjetas actualizada
-            return RedirectToAction("List");
+                // Realiza la actualización del documento
+                await cardDocRef.SetAsync(updateData, SetOptions.MergeAll);
+
+                // Después de editar la tarjeta, redirige a la vista principal (List) y actualiza la lista de tarjetas
+                return RedirectToAction("List", "Wallet");
+            }
+            catch
+            {
+                // Manejo de errores
+                return View();
+            }
         }
 
 
         // POST
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(string id, string name, string bank, string issuer, string owner, string codedate, string cvv)
+        public async Task<IActionResult> Create(string cardId, string name, string bank, string issuer, string codedate, string cvv, string type)
         {
             try
             {
@@ -101,12 +144,13 @@ namespace BilleteraVirtualMVC.Controllers
                     await FirestoreDb.Create("wallet-6d70b")
                         .Collection("Cards").AddAsync(new Dictionary<string, object>
                             {
-                                { "Id", id },
+                                { "CardId", cardId },
                                 { "Name", name },
                                 { "Bank", bank },
                                 { "Issuer",  issuer },
                                 { "CodeDate", codedate },
                                 { "CVV", cvv },
+                                { "Type", type },
                             });
 
                 return View("Index");
@@ -125,5 +169,6 @@ namespace BilleteraVirtualMVC.Controllers
                 return View("ErrorHandler");
             }
         }
+
     }
 }

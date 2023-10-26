@@ -1,4 +1,5 @@
 ﻿@using System.Globalization;
+@model List<BilleteraVirtualMVC.Models.Card>
 ﻿@{
     ViewData["Title"] = "List";
 }
@@ -25,25 +26,14 @@
 
 </head>
 
-
-@{
-    // Define una lista de colores aleatorios en formato hexadecimal
-    string[] randomColors = new string[] {
-        "#3498db", "#ff4545", "#27ae60", "#f39c12", "#8e44ad"
-    };
-}
-
 <body>
     <div class="card-header">
         <input class="form-control" id="myInput" type="text" placeholder="Search..">
     </div>
 
     <br />
-    <div class="grid-container">
     @foreach (var @item in @ViewBag.Cards)
     {
-
-
         // Convierte el valor de CodeDate a un objeto DateTime
         DateTime codeDate = DateTime.ParseExact(@item.CodeDate, "yyyy-MM-dd", CultureInfo.InvariantCulture);
         string formattedCodeDate = codeDate.ToString("MM/yy");
@@ -53,21 +43,38 @@
 
         // Verifica si la tarjeta está a punto de expirar (dentro de los próximos 3 meses)
         bool isExpiringSoon = codeDate <= expirationDate;
-        <a asp-controller="Wallet" asp-action="Edit" asp-route-id="@item.Id">
-        <div class="packet" data-search="@item.Bank @item.Issuer @item.Name @item.Id">
+        <div class="packet" data-search="@item.Bank @item.Issuer @item.Name @item.CardId">
             <div class="form-check form-switch">
-                    <input class="form-check-input" type="checkbox" id="switch-@item.Id" checked>
-                <label class="form-check-label" for="switch-@item.Id"></label>
+                    <input class="form-check-input" type="checkbox" id="switch-@item.CardId" checked>
+                <label class="form-check-label" for="switch-@item.CardId"></label>
+                <div class="btn-group">
+
+                    <ion-icon type="button" data-bs-toggle="dropdown" name="ellipsis-horizontal-outline"></ion-icon>
+
+                    <ul class="dropdown-menu" style="margin-left: 80px">
+                        <li>
+                            <div class="mt-3">
+                                <button class="btn btn-warning mr-2 edit-button" onclick="showEditForm('@item.Id', '@item.Bank', '@item.Issuer', '@item.Name', '@item.CardId', '@item.CVV', '@item.CodeDate, '@item.Type')">Editar</button>
+                            </div>
+                        </li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li>
+                            <form id="deleteForm-@item.CardId" asp-controller="Wallet" asp-action="Delete" asp-route-cardId="@item.Id" method="post">
+                                <input type="submit" value="Delete" class="btn btn-secondary delete-button" style="color: red; margin-right: 80px"/>
+                            </form>
+                        </li>
+                    </ul>
+                </div>
             </div>
             <div class="card-credit">
                 <div class="card-credit">
                     <div class="card-credit tarjeta-recortada">
-                        <div class="front" id="@item.Id">
+                        <div class="front" id="@item.CardId">
                             <!-- Agregado el id "credit-card" -->
                             <div class="strip-bottom"></div>
                             <div class="strip-top"></div>
                             <div class="logo">@item.Bank</div>
-                            <div class="investor">@item.Issuer</div>
+                            <div class="investor" style=" margin-top: 5px">@item.Issuer</div>
                             <div class="chip">
                                 <div class="chip-line"></div>
                                 <div class="chip-line"></div>
@@ -83,9 +90,10 @@
                                     <div class="arrow">›</div>
                                 </button>
                             }
+                            <div class="wave">@item.Type</div>
                             <div class="wave">@item.Name</div>
                             <div class="card-number">
-                                <span class="cc-number">**** **** **** @item.Id.Substring(@item.Id.Length - 4)</span>
+                                <span class="cc-number">**** **** **** @item.CardId.Substring(@item.CardId.Length - 4)</span>
                                 <span class="end">@item.CodeDate <span class="end-text">Valid thru</span></span>
                             </div>
                             <div class="master">
@@ -97,9 +105,110 @@
                 </div>
             </div>
         </div>
-        </a>
+                <!-- Modal de Confirmación de Eliminación -->
+        <div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="confirmDeleteModalLabel">Confirmación de Eliminación</h5>
+                        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        ¿Estás seguro de que deseas eliminar esta tarjeta?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                        <form asp-controller="Wallet" asp-action="Delete" asp-route-cardId="@item.Id" method="post">
+                            <input type="submit" value="Sí, Eliminar" class="btn btn-danger" />
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     }
-    </div>
+
+    <form asp-controller="Wallet" asp-action="Edit" method="post">
+
+        <br />
+        <div class="group">
+            <select class="input" id="bank" name="bank" required>
+                <option value="BNCR">Banco Nacional de Costa Rica</option>
+                <option value="BAC Credomatic">BAC Costa Rica</option>
+                <option value="BCR">Banco de Costa Rica</option>
+                <option value="BPDC">Banco Popular y de Desarrollo Comunal</option>
+                <option value="Promérica">Banco Promérica</option>
+                <option value="Lafise">Banco Lafise</option>
+                <option value="Scotiabank ">Scotiabank Costa Rica</option>
+                <option value="Cathay">Banco Cathay</option>
+                <option value="Davivienda">Davivienda Costa Rica</option>
+                <option value="BGCR">Banco General Costa Rica</option>
+                <option value="Citibank">Citibank Costa Rica</option>
+                <option value="BCT">Banco BCT</option>
+                <option value="BCAC">Banco Crédito Agrícola de Cartago</option>
+                <option value="Azteca">Banco Azteca Costa Rica</option>
+                <option value="BICSA">Banco Internacional de Costa Rica </option>
+
+            </select>
+        </div>
+        <br />
+        <br />
+        <div class="group">
+            <input type="text" class="input" id="cardId" name="cardId" required maxlength="16">
+            <span class="highlight"></span>
+            <span class="bar"></span>
+            <label>Card Number</label>
+        </div>
+        <br />
+        <br />
+        <div class="group">
+            <select class="input" id="issuer" name="issuer" required>
+                <option value="null">Elegir</option>
+                <option value="Visa">Visa</option>
+                <option value="Mastercard">Mastercard</option>
+            </select>
+
+        </div>
+        <br />
+        <br />
+        <div class="group">
+            <select class="input" id="type" name="type" required>
+                <option value="null">Elegir</option>
+                <option value="Crédito">Crédito</option>
+                <option value="Débito">Débito</option>
+            </select>
+        </div>
+        <br />
+        <br />
+        <div class="group">
+            <input type="text" class="input" id="name" name="name" required>
+            <span class="highlight"></span>
+            <span class="bar"></span>
+            <label>Card Houlders</label>
+        </div>
+        <br />
+        <br />
+        <div class="group">
+            <input type="text" class="input" id="cvv" name="cvv" maxlength="4" required>
+            <span class="highlight"></span>
+            <span class="bar"></span>
+            <label>CVV</label>
+        </div>
+        <br />
+        <br />
+        <div class="group">
+            <input type="date" class="input" id="codedate" name="codedate" maxlength="6" required>
+            <span class="highlight"></span>
+            <span class="bar"></span>
+        </div>
+        <br />
+        <br />
+
+        <button type="submit" class="btn btn-primary" style="width: 400px; align-content:center; align-items: center;">Save</button>
+    </form>
+
     <br />
     <div>
         <div>
@@ -141,6 +250,33 @@
 
             // Redirige al usuario a la URL
             window.location.href = url;
+        });
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            $('.delete-button').click(function (e) {
+                e.preventDefault(); // Detén el envío del formulario por defecto
+
+                // Muestra el modal de confirmación
+                $('#confirmDeleteModal').modal('show');
+            });
+        });
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            $('form[id^="deleteForm-"]').on("submit", function (e) {
+                e.preventDefault(); // Evita que el formulario se envíe de inmediato
+
+                var form = $(this);
+
+                // Mostrar una ventana modal de confirmación antes de enviar el formulario
+                if (confirm("¿Estás seguro de que deseas eliminar esta tarjeta?")) {
+                    // Si el usuario confirma, envía el formulario
+                    form.off("submit").submit();
+                }
+            });
         });
     </script>
 
