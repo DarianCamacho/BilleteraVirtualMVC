@@ -24,6 +24,47 @@
         });
     </script>
 
+    <script>
+        function showEditForm(cardId, bank, issuer, name, cardId, cvv, codeDate, type) {
+            // Llena los campos del formulario modal con los datos de la tarjeta
+            document.getElementById('edit-cardId').value = cardId;
+            document.getElementById('edit-bank').value = bank;
+            document.getElementById('edit-issuer').value = issuer;
+            document.getElementById('edit-name').value = name;
+            document.getElementById('edit-cardId').value = cardId;
+            document.getElementById('edit-cvv').value = cvv;
+            document.getElementById('edit-codeDate').value = codeDate;
+            document.getElementById('edit-type').value = type;
+
+            // Muestra el formulario modal
+            $('#editModal').modal('show');
+        }
+    </script>
+
+    <script>
+        // Esta función se encargará de mostrar el formulario de edición de la tarjeta
+        function showEditForm(cardId) {
+            // Oculta todos los formularios de edición antes de mostrar uno
+            $('form[id^="editForm-"]').hide();
+
+            // Muestra el formulario de edición específico
+            $('#editForm-' + cardId).show();
+        }
+
+        // Asigna el manejador de clic al botón "Editar" utilizando jQuery
+        $(document).ready(function () {
+            $('.edit-button').click(function () {
+                // Obtiene el cardId de la tarjeta desde el atributo data-card-id
+                var cardId = $(this).data('card-id');
+
+                // Llama a la función para mostrar el formulario de edición
+                showEditForm(cardId);
+            });
+        });
+    </script>
+
+
+
 </head>
 
 <body>
@@ -54,7 +95,7 @@
                     <ul class="dropdown-menu" style="margin-left: 80px">
                         <li>
                             <div class="mt-3">
-                                <button class="btn btn-warning mr-2 edit-button" onclick="showEditForm('@item.Id', '@item.Bank', '@item.Issuer', '@item.Name', '@item.CardId', '@item.CVV', '@item.CodeDate, '@item.Type')">Editar</button>
+                               <button class="btn btn-warning mr-2 edit-button" data-card-id="@item.Id">Editar</button>
                             </div>
                         </li>
                         <li><hr class="dropdown-divider"></li>
@@ -127,88 +168,105 @@
                 </div>
             </div>
         </div>
+        <form id="editForm-@item.Id" asp-controller="Wallet" asp-action="Edit" method="post" style="display: none;">
 
+            <br />
+            <div class="group">
+                <select class="input" id="bank" name="bank" required>
+                    <option value="BNCR">Banco Nacional de Costa Rica</option>
+                    <option value="BAC Credomatic">BAC Costa Rica</option>
+                    <option value="BCR">Banco de Costa Rica</option>
+                    <option value="BPDC">Banco Popular y de Desarrollo Comunal</option>
+                    <option value="Promérica">Banco Promérica</option>
+                    <option value="Lafise">Banco Lafise</option>
+                    <option value="Scotiabank ">Scotiabank Costa Rica</option>
+                    <option value="Cathay">Banco Cathay</option>
+                    <option value="Davivienda">Davivienda Costa Rica</option>
+                    <option value="BGCR">Banco General Costa Rica</option>
+                    <option value="Citibank">Citibank Costa Rica</option>
+                    <option value="BCT">Banco BCT</option>
+                    <option value="BCAC">Banco Crédito Agrícola de Cartago</option>
+                    <option value="Azteca">Banco Azteca Costa Rica</option>
+                    <option value="BICSA">Banco Internacional de Costa Rica </option>
+
+                </select>
+            </div>
+            <br />
+            <br />
+            <div class="group">
+                <input type="text" class="input" id="cardId" name="cardId" required maxlength="16">
+                <span class="highlight"></span>
+                <span class="bar"></span>
+                <label>Card Number</label>
+            </div>
+            <br />
+            <br />
+            <div class="group">
+                <select class="input" id="issuer" name="issuer" required>
+                    <option value="null">Elegir</option>
+                    <option value="Visa">Visa</option>
+                    <option value="Mastercard">Mastercard</option>
+                </select>
+
+            </div>
+            <br />
+            <br />
+            <div class="group">
+                <select class="input" id="type" name="type" required>
+                    <option value="null">Elegir</option>
+                    <option value="Crédito">Crédito</option>
+                    <option value="Débito">Débito</option>
+                </select>
+            </div>
+            <br />
+            <br />
+            <div class="group">
+                <input type="text" class="input" id="name" name="name" required>
+                <span class="highlight"></span>
+                <span class="bar"></span>
+                <label>Card Houlders</label>
+            </div>
+            <br />
+            <br />
+            <div class="group">
+                <input type="text" class="input" id="cvv" name="cvv" maxlength="4" required>
+                <span class="highlight"></span>
+                <span class="bar"></span>
+                <label>CVV</label>
+            </div>
+            <br />
+            <br />
+            <div class="group">
+                <input type="date" class="input" id="codedate" name="codedate" maxlength="6" required>
+                <span class="highlight"></span>
+                <span class="bar"></span>
+            </div>
+            <br />
+            <br />
+
+            <button type="submit" class="btn btn-primary" style="width: 400px; align-content:center; align-items: center;">Save</button>
+        </form>
     }
+    <script>
+        function showEditForm(cardId, bank, issuer, name, cardId, cvv, codeDate, type) {
+            // Oculta todos los formularios de edición antes de mostrar uno
+            $('form[id^="editForm-"]').hide();
 
-    <form asp-controller="Wallet" asp-action="Edit" method="post">
+            // Llena los campos del formulario de edición con los datos de la tarjeta
+            document.getElementById('edit-cardId').value = cardId;
+            document.getElementById('edit-bank').value = bank;
+            document.getElementById('edit-issuer').value = issuer;
+            document.getElementById('edit-name').value = name;
+            document.getElementById('edit-cardId').value = cardId;
+            document.getElementById('edit-cvv').value = cvv;
+            document.getElementById('edit-codeDate').value = codeDate;
+            document.getElementById('edit-type').value = type;
 
-        <br />
-        <div class="group">
-            <select class="input" id="bank" name="bank" required>
-                <option value="BNCR">Banco Nacional de Costa Rica</option>
-                <option value="BAC Credomatic">BAC Costa Rica</option>
-                <option value="BCR">Banco de Costa Rica</option>
-                <option value="BPDC">Banco Popular y de Desarrollo Comunal</option>
-                <option value="Promérica">Banco Promérica</option>
-                <option value="Lafise">Banco Lafise</option>
-                <option value="Scotiabank ">Scotiabank Costa Rica</option>
-                <option value="Cathay">Banco Cathay</option>
-                <option value="Davivienda">Davivienda Costa Rica</option>
-                <option value="BGCR">Banco General Costa Rica</option>
-                <option value="Citibank">Citibank Costa Rica</option>
-                <option value="BCT">Banco BCT</option>
-                <option value="BCAC">Banco Crédito Agrícola de Cartago</option>
-                <option value="Azteca">Banco Azteca Costa Rica</option>
-                <option value="BICSA">Banco Internacional de Costa Rica </option>
-
-            </select>
-        </div>
-        <br />
-        <br />
-        <div class="group">
-            <input type="text" class="input" id="cardId" name="cardId" required maxlength="16">
-            <span class="highlight"></span>
-            <span class="bar"></span>
-            <label>Card Number</label>
-        </div>
-        <br />
-        <br />
-        <div class="group">
-            <select class="input" id="issuer" name="issuer" required>
-                <option value="null">Elegir</option>
-                <option value="Visa">Visa</option>
-                <option value="Mastercard">Mastercard</option>
-            </select>
-
-        </div>
-        <br />
-        <br />
-        <div class="group">
-            <select class="input" id="type" name="type" required>
-                <option value="null">Elegir</option>
-                <option value="Crédito">Crédito</option>
-                <option value="Débito">Débito</option>
-            </select>
-        </div>
-        <br />
-        <br />
-        <div class="group">
-            <input type="text" class="input" id="name" name="name" required>
-            <span class="highlight"></span>
-            <span class="bar"></span>
-            <label>Card Houlders</label>
-        </div>
-        <br />
-        <br />
-        <div class="group">
-            <input type="text" class="input" id="cvv" name="cvv" maxlength="4" required>
-            <span class="highlight"></span>
-            <span class="bar"></span>
-            <label>CVV</label>
-        </div>
-        <br />
-        <br />
-        <div class="group">
-            <input type="date" class="input" id="codedate" name="codedate" maxlength="6" required>
-            <span class="highlight"></span>
-            <span class="bar"></span>
-        </div>
-        <br />
-        <br />
-
-        <button type="submit" class="btn btn-primary" style="width: 400px; align-content:center; align-items: center;">Save</button>
-    </form>
-
+            // Muestra el formulario de edición específico
+            $('#editForm-' + cardId).show();
+        }
+    </script>
+ 
     <br />
     <div>
         <div>
