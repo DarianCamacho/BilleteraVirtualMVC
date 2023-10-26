@@ -104,30 +104,31 @@ namespace BilleteraVirtualMVC.Controllers
             try
             {
                 // Primero, obtén la referencia al documento de la tarjeta que deseas editar en Firebase
-                var cardDocRef = FirestoreDb.Create("wallet-6d70b")
+                var cardDocRef = FirestoreDb.Create("virtualwallet-2a397")
                     .Collection("Cards")
                     .Document(cardId);
 
-                // Crear un objeto anónimo con los campos a actualizar
-                var updateData = new
+                // Actualiza los valores de la tarjeta
+                var updateData = new Dictionary<string, object>
                 {
-                    Name = name,
-                    Bank = bank,
-                    Issuer = issuer,
-                    CodeDate = codedate,
-                    CVV = cvv,
-                    Type = type
+                    { "Name", name },
+                    { "Bank", bank },
+                    { "Issuer",  issuer },
+                    { "CodeDate", codedate },
+                    { "CVV", cvv },
+                    { "Type", type },
                 };
 
-                // Realiza la actualización del documento
-                await cardDocRef.SetAsync(updateData, SetOptions.MergeAll);
+                await cardDocRef.UpdateAsync(updateData);
 
-                // Después de editar la tarjeta, redirige a la vista principal (List) y actualiza la lista de tarjetas
+                // Después de editar la tarjeta, actualiza la lista de tarjetas
+                await GetCards();
+
+                // Redirige a la vista principal (Index) después de editar la tarjeta
                 return RedirectToAction("List", "Wallet");
             }
             catch
             {
-                // Manejo de errores
                 return View();
             }
         }
