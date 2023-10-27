@@ -43,24 +43,22 @@
 
         // Verifica si la tarjeta está a punto de expirar (dentro de los próximos 3 meses)
         bool isExpiringSoon = codeDate <= expirationDate;
-        <div class="packet" data-search="@item.Bank @item.Issuer @item.Name @item.CardId">
+        <div class="packet" data-search="@item.Bank @item.Issuer @item.Name @item.CardNumber">
             <div class="form-check form-switch">
-                    <input class="form-check-input" type="checkbox" id="switch-@item.CardId" checked>
-                <label class="form-check-label" for="switch-@item.CardId"></label>
+                <input class="form-check-input" type="checkbox" id="switch-@item.CardNumber" checked>
+                <label class="form-check-label" for="switch-@item.CardNumber"></label>
                 <div class="btn-group">
 
                     <ion-icon type="button" data-bs-toggle="dropdown" name="ellipsis-horizontal-outline"></ion-icon>
 
-                    <ul class="dropdown-menu" style="margin-left: 80px">
-                        <li>
-                            <a class="dropdown-item edit-link" href="#" id="editLink-@item.Id" data-cardid="@item.Id" data-bank="@item.Bank" data-issuer="@item.Issuer" data-name="@item.Name" data-cardid="@item.CardId" data-cvv="@item.CVV" data-codedate="@item.CodeDate" data-type="@item.Type">
-                                Editar
-                            </a>
-                        </li>
+                    <ul class="dropdown-menu">
+                         <li>
+                            <a class="dropdown-item" href="#" onclick="window.location='/Wallet/Edit/@item.Id?CardNumber=@item.CardNumber&Name=@item.Name&Bank=@item.Bank&CVV=@item.CVV&Issuer=@item.Issuer&CodeDate=@item.CodeDate&Type=@item.Type'">Editar</a>
+                         </li>
                         <li><hr class="dropdown-divider"></li>
                         <li>
-                            <form id="deleteForm-@item.CardId" asp-controller="Wallet" asp-action="Delete" asp-route-cardId="@item.Id" method="post">
-                                <input type="submit" value="Delete" class="btn btn-secondary delete-button" style="color: red; margin-right: 80px"/>
+                            <form id="deleteForm-@item.CardNumber" asp-controller="Wallet" asp-action="Delete" asp-route-cardId="@item.Id" method="post">
+                                <a type="submit" value="Delete" class="dropdown-item delete-button" style="color: red; margin-right: 80px" href="#"><ion-icon name="card-outline"></ion-icon> Delete</a>
                             </form>
                         </li>
                     </ul>
@@ -69,7 +67,7 @@
             <div class="card-credit">
                 <div class="card-credit">
                     <div class="card-credit tarjeta-recortada">
-                        <div class="front" id="@item.CardId">
+                        <div class="front" id="@item.CardNumber">
                             <!-- Agregado el id "credit-card" -->
                             <div class="strip-bottom"></div>
                             <div class="strip-top"></div>
@@ -93,7 +91,7 @@
                             <div class="wave">@item.Type</div>
                             <div class="wave">@item.Name</div>
                             <div class="card-number">
-                                <span class="cc-number">**** **** **** @item.CardId.Substring(@item.CardId.Length - 4)</span>
+                                <span class="cc-number">**** **** **** @item.CardNumber.Substring(@item.CardNumber.Length - 4)</span>
                                 <span class="end">@item.CodeDate <span class="end-text">Valid thru</span></span>
                             </div>
                             <div class="master">
@@ -105,7 +103,7 @@
                 </div>
             </div>
         </div>
-                <!-- Modal de Confirmación de Eliminación -->
+        <!-- Modal de Confirmación de Eliminación -->
         <div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -130,132 +128,104 @@
 
     }
 
-    <form asp-controller="Wallet" asp-action="Edit" method="post" id="editForm" style="display: none;">
-        <br />
-        <div class="group">
-            <select class="input" id="bank" name="bank" required>
-                <option value="BNCR">Banco Nacional de Costa Rica</option>
-                <option value="BAC Credomatic">BAC Costa Rica</option>
-                <option value="BCR">Banco de Costa Rica</option>
-                <option value="BPDC">Banco Popular y de Desarrollo Comunal</option>
-                <option value="Promérica">Banco Promérica</option>
-                <option value="Lafise">Banco Lafise</option>
-                <option value="Scotiabank ">Scotiabank Costa Rica</option>
-                <option value="Cathay">Banco Cathay</option>
-                <option value="Davivienda">Davivienda Costa Rica</option>
-                <option value="BGCR">Banco General Costa Rica</option>
-                <option value="Citibank">Citibank Costa Rica</option>
-                <option value="BCT">Banco BCT</option>
-                <option value="BCAC">Banco Crédito Agrícola de Cartago</option>
-                <option value="Azteca">Banco Azteca Costa Rica</option>
-                <option value="BICSA">Banco Internacional de Costa Rica </option>
+    <div id="edit-form-container" style="display: none;">
+        <div class="content-box" style="margin-top: 3%;">
+            <div class="tab-content">
+                <div class="tab-pane fade show active" id="visits-form">
+                    <ul class="nav nav-tabs card-header-tabs" style="margin-bottom: 20px;">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="login-tab" data-bs-toggle="tab" href="#visits-form">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-credit-card-2-front" viewBox="0 0 16 16">
+                                    <path d="M14 3a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h12zM2 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H2z" />
+                                    <path d="M2 5.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-1zm0 3a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5z" />
+                                </svg>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <form asp-controller="Wallet" asp-action="Edit" method="post">
+                    <input type="hidden" name="cardId" id="edit-cardId" value="" />
 
-            </select>
+                    <br />
+                    <div class="group">
+                        <select class="input" id="editBank" name="bank" required>
+                            <option value="BNCR">Banco Nacional de Costa Rica</option>
+                            <option value="BAC Credomatic">BAC Costa Rica</option>
+                            <option value="BCR">Banco de Costa Rica</option>
+                            <option value="BPDC">Banco Popular y de Desarrollo Comunal</option>
+                            <option value="Promérica">Banco Promérica</option>
+                            <option value="Lafise">Banco Lafise</option>
+                            <option value="Scotiabank ">Scotiabank Costa Rica</option>
+                            <option value="Cathay">Banco Cathay</option>
+                            <option value="Davivienda">Davivienda Costa Rica</option>
+                            <option value="BGCR">Banco General Costa Rica</option>
+                            <option value="Citibank">Citibank Costa Rica</option>
+                            <option value="BCT">Banco BCT</option>
+                            <option value="BCAC">Banco Crédito Agrícola de Cartago</option>
+                            <option value="Azteca">Banco Azteca Costa Rica</option>
+                            <option value="BICSA">Banco Internacional de Costa Rica </option>
+
+                        </select>
+                    </div>
+                    <br />
+                    <br />
+                    <div class="group">
+                        <select class="input" id="editIssuer" name="issuer" required>
+                            <option value="null">Elegir</option>
+                            <option value="Visa">Visa</option>
+                            <option value="Mastercard">Mastercard</option>
+                        </select>
+
+                    </div>
+                    <br />
+                    <br />
+                    <div class="group">
+                        <input type="text" class="input" id="editName" name="name" required>
+                        <span class="highlight"></span>
+                        <span class="bar"></span>
+                        <label>Card Houlders</label>
+                    </div>
+                    <br />
+                    <br />
+                    <div class="group">
+                        <input type="text" class="input" id="editCardNumber" required maxlength="16">
+                        <span class="highlight"></span>
+                        <span class="bar"></span>
+                        <label>Card Number</label>
+                    </div>
+                    <br />
+                    <br />
+                    <div class="group">
+                        <input type="text" class="input" id="editCVV" name="cvv" maxlength=" 4" required>
+                        <span class="highlight"></span>
+                        <span class="bar"></span>
+                        <label>CVV</label>
+                    </div>
+                    <br />
+                    <br />
+                    <div class="group">
+                        <input type="date" class="input" id="editCodeDate" name="codedate" maxlength="6" required>
+                        <span class="highlight"></span>
+                        <span class="bar"></span>
+                    </div>
+                    <br />
+                    <br />
+                    <div class="group">
+                        <select class="input" id="editType" name="type" required>
+                            <option value="null">Elegir</option>
+                            <option value="Crédito">Crédito</option>
+                            <option value="Débito">Débito</option>
+                        </select>
+                    </div>
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </form>
+            </div>
         </div>
-        <br />
-        <br />
-        <div class="group">
-            <input type="text" class="input" id="cardId" name="cardId" required maxlength="16">
-            <span class="highlight"></span>
-            <span class="bar"></span>
-            <label>Card Number</label>
-        </div>
-        <br />
-        <br />
-        <div class="group">
-            <select class="input" id="issuer" name="issuer">
-                <option value="null">Elegir</option>
-                <option value="Visa">Visa</option>
-                <option value="Mastercard">Mastercard</option>
-            </select>
-
-        </div>
-        <br />
-        <br />
-        <div class="group">
-            <select class="input" id="type" name="type">
-                <option value="null">Elegir</option>
-                <option value="Crédito">Crédito</option>
-                <option value="Débito">Débito</option>
-            </select>
-        </div>
-        <br />
-        <br />
-        <div class="group">
-            <input type="text" class="input" id="name" name="name">
-            <span class="highlight"></span>
-            <span class="bar"></span>
-            <label>Card Houlders</label>
-        </div>
-        <br />
-        <br />
-        <div class="group">
-            <input type="text" class="input" id="cvv" name="cvv" maxlength="4">
-            <span class="highlight"></span>
-            <span class="bar"></span>
-            <label>CVV</label>
-        </div>
-        <br />
-        <br />
-        <div class="group">
-            <input type="date" class="input" id="codedate" name="codedate" maxlength="6">
-            <span class="highlight"></span>
-            <span class="bar"></span>
-        </div>
-        <br />
-        <br />
-
-        <button type="submit" class="btn btn-primary" style="width: 400px; align-content:center; align-items: center;">Save</button>
-    </form>
-
-    <script>
-        $(document).ready(function () {
-            $(".edit-link").click(function () {
-                var cardId = $(this).data("cardid");
-                var bank = $(this).data("bank");
-                var issuer = $(this).data("issuer");
-                var name = $(this).data("name");
-                var cardNumber = $(this).data("cardid");
-                var cvv = $(this).data("cvv");
-                var codeDate = $(this).data("codedate");
-                var type = $(this).data("type");
-
-                // Llena los campos del formulario con los valores correspondientes
-                $("#editCardId").val(cardId);
-                $("#editBank").val(bank);
-                $("#editIssuer").val(issuer);
-                $("#editName").val(name);
-                $("#editCardNumber").val(cardNumber);
-                $("#editCVV").val(cvv);
-                $("#editCodeDate").val(codeDate);
-                $("#editType").val(type);
-
-                // Muestra el formulario modal
-                $("#editForm").show();
-            });
-
-            // Agrega un controlador de clic al botón "Guardar" en el formulario
-            $("#saveEditButton").click(function () {
-                // Serializa los datos del formulario
-                var formData = $("#editForm").serialize();
-
-                // Realiza una solicitud AJAX POST para enviar los datos al controlador
-                $.ajax({
-                    url: $("#editForm").attr("action"),
-                    type: "POST",
-                    data: formData,
-                    success: function (result) {
-                        // Aquí puedes manejar la respuesta del servidor después de la edición
-                        // Por ejemplo, cerrar el formulario modal o actualizar la lista de tarjetas.
-                    },
-                    error: function (error) {
-                        // Manejo de errores
-                        console.log("Error: " + error);
-                    }
-                });
-            });
-        });
-    </script>
+    </div>
 
     <br />
     <div>

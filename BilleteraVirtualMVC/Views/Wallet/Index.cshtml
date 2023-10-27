@@ -92,7 +92,7 @@
                 <br />
                 <br />
                 <div class="group">
-                    <input type="text" class="input" id="cardId" name="cardId" required maxlength="16">
+                    <input type="text" class="input" id="cardNumber" name="cardNumber" required maxlength="16">
                     <span class="highlight"></span>
                     <span class="bar"></span>
                     <label>Card Number</label>
@@ -159,7 +159,7 @@
             updateCreditCardField("logo", e.target.value);
         });
 
-        document.getElementById("cardId").addEventListener("input", function (e) {
+        document.getElementById("cardNumber").addEventListener("input", function (e) {
             updateCreditCardField("cc-number", e.target.value);
         });
 
@@ -196,7 +196,7 @@
             return cardNumber;
         }
 
-        document.getElementById("cardId").addEventListener("input", function (e) {
+        document.getElementById("cardNumber").addEventListener("input", function (e) {
             const formattedCardNumber = formatCardNumber(e.target.value);
             updateCreditCardField("cc-number", formattedCardNumber);
         });

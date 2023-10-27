@@ -3,8 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using BilleteraVirtualMVC.Models;
 using Firebase.Storage;
 using Newtonsoft.Json;
-using Firebase.Auth;
-using Firebase.Auth.Repository;
 
 namespace BilleteraVirtualMVC.Controllers
 {
@@ -15,7 +13,7 @@ namespace BilleteraVirtualMVC.Controllers
             return View();
         }
 
-        public async Task<IActionResult> List()
+        public IActionResult List()
         {
             ViewBag.User = JsonConvert.DeserializeObject<Models.User>(HttpContext.Session.GetString("userSession"));
 
@@ -23,14 +21,67 @@ namespace BilleteraVirtualMVC.Controllers
                 return RedirectToAction("Index", "Error");
 
             //Muestra el get en la visa
-            return await GetCards();
+            return GetCards();
 
         }
 
-        public ActionResult CardDetail()
+        private IActionResult GetCards()
         {
+            CardsHandler cardsHandler = new CardsHandler();
+
+            ViewBag.Cards = cardsHandler.GetCardsCollection().Result;
+
+            return View("List");
+        }
+
+        // POST
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult EditCard(string id, string cardNumber, string name, string bank, string issuer, string codedate, string cvv, string type)
+        {
+            try
+            {
+                CardsHandler cardsHandler = new CardsHandler();
+
+                bool result = cardsHandler.Edit(id, cardNumber, name, bank, issuer, codedate, cvv, type).Result;
+
+                return GetCards();
+            }
+
+            catch (FirebaseStorageException ex)
+            {
+                ViewBag.Error = new ErrorHandler()
+                {
+                    Title = ex.Message,
+                    ErrorMessage = ex.InnerException?.Message,
+                    ActionMessage = "Go to Wallet",
+                    Path = "/Wallet"
+                };
+
+                return View("ErrorHandler");
+            }
+        }
+
+        //Edit
+        public IActionResult Edit(string id, string cardNumber, string name, string bank, string cvv, string issuer, string codedate, string type)
+        {
+            Card edited = new Card
+            {
+                Id = id,
+                CardNumber = cardNumber,
+                Name = name,
+                Bank = bank,
+                CVV = cvv,
+                Issuer = issuer,
+                CodeDate = codedate,
+                Type = type,
+            };
+
+            ViewBag.Edited = edited;
+
             return View();
         }
+
 
         public IActionResult GetUserName()
         {
@@ -40,34 +91,6 @@ namespace BilleteraVirtualMVC.Controllers
 
             // Pasamos el nombre de usuario a la vista
             ViewBag.UserName = user?.Name;
-
-            return View();
-        }
-
-        private async Task<IActionResult> GetCards()
-        {
-            List<Card> cardsList = new List<Card>();
-            Query query = FirestoreDb.Create("wallet-6d70b").Collection("Cards");
-            QuerySnapshot querySnaphot = await query.GetSnapshotAsync();
-
-            foreach (var item in querySnaphot)
-            {
-                Dictionary<string, object> data = item.ToDictionary();
-
-                cardsList.Add(new Card
-                {
-                    Id = item.Id,
-                    CardId = data["CardId"].ToString(),
-                    Name = data["Name"].ToString(),
-                    Bank = data["Bank"].ToString(),
-                    CVV = data["CVV"].ToString(),
-                    Issuer = data["Issuer"].ToString(),
-                    CodeDate = data["CodeDate"].ToString(),
-                    Type = data["Type"].ToString()
-                });
-            }
-
-            ViewBag.Cards = cardsList;
 
             return View();
         }
@@ -97,64 +120,18 @@ namespace BilleteraVirtualMVC.Controllers
             }
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string cardId, string name, string bank, string issuer, string codedate, string cvv, string type)
-        {
-            try
-            {
-                // Primero, obtén la referencia al documento de la tarjeta que deseas editar en Firebase
-                var cardDocRef = FirestoreDb.Create("virtualwallet-2a397")
-                    .Collection("Cards")
-                    .Document(cardId);
-
-                // Actualiza los valores de la tarjeta
-                var updateData = new Dictionary<string, object>
-                {
-                    { "Name", name },
-                    { "Bank", bank },
-                    { "Issuer",  issuer },
-                    { "CodeDate", codedate },
-                    { "CVV", cvv },
-                    { "Type", type },
-                };
-
-                await cardDocRef.UpdateAsync(updateData);
-
-                // Después de editar la tarjeta, actualiza la lista de tarjetas
-                await GetCards();
-
-                // Redirige a la vista principal (Index) después de editar la tarjeta
-                return RedirectToAction("List", "Wallet");
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-
         // POST
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(string cardId, string name, string bank, string issuer, string codedate, string cvv, string type)
+        public IActionResult Create(string cardNumber, string name, string bank, string issuer, string codedate, string cvv, string type)
         {
             try
             {
-                DocumentReference addedDocRef =
-                    await FirestoreDb.Create("wallet-6d70b")
-                        .Collection("Cards").AddAsync(new Dictionary<string, object>
-                            {
-                                { "CardId", cardId },
-                                { "Name", name },
-                                { "Bank", bank },
-                                { "Issuer",  issuer },
-                                { "CodeDate", codedate },
-                                { "CVV", cvv },
-                                { "Type", type },
-                            });
+                CardsHandler cardsHandler = new CardsHandler();
 
-                return View("Index");
+                bool result = cardsHandler.Create(cardNumber, name, bank, issuer, codedate, cvv, type).Result;
+
+                return GetCards();
             }
 
             catch (FirebaseStorageException ex)
@@ -170,6 +147,5 @@ namespace BilleteraVirtualMVC.Controllers
                 return View("ErrorHandler");
             }
         }
-
     }
 }

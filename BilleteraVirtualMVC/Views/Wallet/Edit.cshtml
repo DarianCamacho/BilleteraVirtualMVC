@@ -1,0 +1,152 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<head>
+
+    <link rel="stylesheet" href="~/css/Card.css" />
+    <link rel="stylesheet" href="~/css/Home.css" />
+
+</head>
+
+<body>
+    <br />
+    <figure class="text-center">
+        <blockquote class="blockquote">
+            <p class="mb-0 gradient-text">Modifica los datos</p>
+        </blockquote>
+        <figcaption class="blockquote-footer">
+            AVC
+        </figcaption>
+    </figure>
+    <div class="container-credit">
+        <div class="card-credit " style="margin-left: 150px;">
+            <div class="front" id="credit-card">
+                <!-- Agregado el id "credit-card" -->
+                <div class="strip-bottom"></div>
+                <div class="strip-top"></div>
+                <div class="logo">LOGO</div>
+                <div class="investor">Investor</div>
+                <div class="chip">
+                    <div class="chip-line"></div>
+                    <div class="chip-line"></div>
+                    <div class="chip-line"></div>
+                    <div class="chip-line"></div>
+                    <div class="chip-main"></div>
+                </div>
+                <div class="wave">Wave</div>
+                <div class="card-number">
+                    <span class="cc-number">•••• •••• •••• ••••</span>
+                    <span class="end">12/24 <span class="end-text">Valid thru</span></span>
+                </div>
+                <div class="card-holder">NOMBRE DEL TITULAR</div>
+                <div class="master">
+                    <div class="circle master-red"></div>
+                    <div class="circle master-yellow"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="linea">
+    </div>
+
+    <div class="content-box" style="margin-top: 3%;">
+        <div class="tab-content">
+            <div class="tab-pane fade show active" id="visits-form">
+                <ul class="nav nav-tabs card-header-tabs" style="margin-bottom: 20px;">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="login-tab" data-bs-toggle="tab" href="#visits-form">Edit 
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-credit-card-2-front" viewBox="0 0 16 16">
+                                <path d="M14 3a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h12zM2 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H2z" />
+                                <path d="M2 5.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-1zm0 3a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5z" />
+                            </svg>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <form asp-controller="Wallet" asp-action="EditCard">
+            <br />
+                <div class="group">
+                    <input type="text" class="form-control" id="id" name="id" value="@ViewBag.Edited.Id" required readonly>
+                </div>
+            <div class="group">
+                    <select class="input" id="bank" name="bank" value="@ViewBag.Edited.Id">
+                    <option value="BNCR">Banco Nacional de Costa Rica</option>
+                    <option value="BAC Credomatic">BAC Costa Rica</option>
+                    <option value="BCR">Banco de Costa Rica</option>
+                    <option value="BPDC">Banco Popular y de Desarrollo Comunal</option>
+                    <option value="Promérica">Banco Promérica</option>
+                    <option value="Lafise">Banco Lafise</option>
+                    <option value="Scotiabank ">Scotiabank Costa Rica</option>
+                    <option value="Cathay">Banco Cathay</option>
+                    <option value="Davivienda">Davivienda Costa Rica</option>
+                    <option value="BGCR">Banco General Costa Rica</option>
+                    <option value="Citibank">Citibank Costa Rica</option>
+                    <option value="BCT">Banco BCT</option>
+                    <option value="BCAC">Banco Crédito Agrícola de Cartago</option>
+                    <option value="Azteca">Banco Azteca Costa Rica</option>
+                    <option value="BICSA">Banco Internacional de Costa Rica </option>
+
+                </select>
+            </div>
+            <br />
+            <br />
+            <div class="group">
+                    <input type="text" class="input" id="cardNumber" name="cardNumber" value="@ViewBag.Edited.CardNumber" required maxlength="16">
+                <span class="highlight"></span>
+                <span class="bar"></span>
+                <label>Card Number</label>
+            </div>
+            <br />
+            <br />
+            <div class="group">
+                    <select class="input" id="issuer" name="issuer" value="@ViewBag.Edited.Issuer" required>
+                    <option value="Visa">Visa</option>
+                    <option value="Mastercard">Mastercard</option>
+                </select>
+
+            </div>
+            <br />
+            <br />
+            <div class="group">
+                    <select class="input" id="type" name="type" value="@ViewBag.Edited.Type" required>
+                    <option value="Crédito">Crédito</option>
+                    <option value="Débito">Débito</option>
+                </select>
+            </div>
+            <br />
+            <br />
+            <div class="group">
+                    <input type="text" class="input" id="name" name="name" value="@ViewBag.Edited.Name" required>
+                <span class="highlight"></span>
+                <span class="bar"></span>
+                <label>Card Houlders</label>
+            </div>
+            <br />
+            <br />
+            <div class="group">
+                    <input type="text" class="input" id="cvv" name="cvv" maxlength="4" value="@ViewBag.Edited.CVV" required>
+                <span class="highlight"></span>
+                <span class="bar"></span>
+                <label>CVV</label>
+            </div>
+            <br />
+            <br />
+            <div class="group">
+                    <input type="date" class="input" id="codedate" name="codedate" maxlength="6" value="@ViewBag.Edited.CodeDate" required>
+                <span class="highlight"></span>
+                <span class="bar"></span>
+            </div>
+            <br />
+            <br />
+
+            <button type="submit" class="btn btn-primary" style="width: 400px; align-content:center; align-items: center;">Save</button>
+            </form>
+        </div>
+    </div>
+</body>

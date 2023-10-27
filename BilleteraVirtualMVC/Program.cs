@@ -11,7 +11,7 @@ Environment.SetEnvironmentVariable("GOOGLE_APPLICATION_CREDENTIALS", path);
 
 builder.Services.AddSession(options =>
 {
-    options.IdleTimeout = TimeSpan.FromSeconds(3000);
+    options.IdleTimeout = TimeSpan.FromSeconds(300000000);
     options.Cookie.HttpOnly = true;
     options.Cookie.IsEssential = true;
 });
