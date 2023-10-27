@@ -28,8 +28,8 @@
                 <!-- Agregado el id "credit-card" -->
                 <div class="strip-bottom"></div>
                 <div class="strip-top"></div>
-                <div class="logo">LOGO</div>
-                <div class="investor">Investor</div>
+                <div class="logo">@ViewBag.Bank</div>
+                <div class="investor">@ViewBag.Edited.Issuer</div>
                 <div class="chip">
                     <div class="chip-line"></div>
                     <div class="chip-line"></div>
@@ -37,12 +37,12 @@
                     <div class="chip-line"></div>
                     <div class="chip-main"></div>
                 </div>
-                <div class="wave">Wave</div>
+                <div class="wave">@ViewBag.Edited.Type</div>
                 <div class="card-number">
-                    <span class="cc-number">•••• •••• •••• ••••</span>
+                    <span class="cc-number">@ViewBag.Edited.CardNumber</span>
                     <span class="end">12/24 <span class="end-text">Valid thru</span></span>
                 </div>
-                <div class="card-holder">NOMBRE DEL TITULAR</div>
+                <div class="card-holder">@ViewBag.Edited.Name</div>
                 <div class="master">
                     <div class="circle master-red"></div>
                     <div class="circle master-yellow"></div>
