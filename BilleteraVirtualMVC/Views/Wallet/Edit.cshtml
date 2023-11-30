@@ -28,7 +28,7 @@
                 <!-- Agregado el id "credit-card" -->
                 <div class="strip-bottom"></div>
                 <div class="strip-top"></div>
-                <div class="logo">@ViewBag.Bank</div>
+                <div class="logo">@ViewBag.Edited.Bank</div>
                 <div class="investor">@ViewBag.Edited.Issuer</div>
                 <div class="chip">
                     <div class="chip-line"></div>
@@ -75,7 +75,7 @@
                     <input type="text" class="form-control" id="id" name="id" value="@ViewBag.Edited.Id" required readonly>
                 </div>
             <div class="group">
-                    <select class="input" id="bank" name="bank" value="@ViewBag.Edited.Id">
+                    <select class="input" id="bank" name="bank" value="@ViewBag.Edited.Bank">
                     <option value="BNCR">Banco Nacional de Costa Rica</option>
                     <option value="BAC Credomatic">BAC Costa Rica</option>
                     <option value="BCR">Banco de Costa Rica</option>
